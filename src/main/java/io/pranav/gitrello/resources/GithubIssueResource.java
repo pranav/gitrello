@@ -12,10 +12,8 @@ import javax.ws.rs.core.MediaType;
 @Path("gitrello/github/issue")
 public class GithubIssueResource {
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void receiveGithubIssueWebHook(GithubWebHook githubWebHook) {
-        System.out.println(githubWebHook.getIssue().getId());
-
-    }
+  @POST
+  @Consumes(MediaType.APPLICATION_JSON)
+  public void receiveGithubIssueWebHook(GithubWebHook githubWebHook) {
+  }
 }
