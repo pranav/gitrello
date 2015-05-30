@@ -1,257 +1,141 @@
 package io.pranav.gitrello.github;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import io.pranav.gitrello.github.GithubRepository.Builder;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonDeserialize(builder = Builder.class)
 public class GithubRepository {
-    private int id;
-    private String name;
-    @JsonProperty("full_name")
-    private String fullName;
-    private GithubUser owner;
-    @JsonProperty("private")
-    private boolean privateRepo;
-    @JsonProperty("html_url")
-    private String htmlUrl;
-    private String description;
-    private boolean fork;
-    private String url;
-    @JsonProperty("forks_url")
-    private String forksUrl;
-    @JsonProperty("keys_url")
-    private String keysUrl;
-    @JsonProperty("collaborators_url")
-    private String collaboratorsUrl;
-    @JsonProperty("teams_url")
-    private String teams_url;
-    @JsonProperty("hooks_url")
-    private String hooksUrl;
-    @JsonProperty("issue_events_url")
-    private String issueEventsUrl;
-    @JsonProperty("assignees_url")
-    private String assigneesUrl;
-    @JsonProperty("branches_url")
-    private String branchesUrl;
-    @JsonProperty("git_tags_url")
-    private String gitTagsUrl;
-    @JsonProperty("git_refs_url")
-    private String gitRefsUrl;
-    @JsonProperty("trees_url")
-    private String treesUrl;
-    @JsonProperty("statuses_url")
-    private String statusesUrl;
-    @JsonProperty("languages_url")
-    private String languagesUrl;
-    @JsonProperty("stargazers_url")
-    private String stargazersUrl;
-    @JsonProperty("contributors_url")
-    private String contributorsUrl;
-    @JsonProperty("subscribers_url")
-    private String subscribersUrl;
-    @JsonProperty("subscription_url")
-    private String subsciptionUrl;
-    @JsonProperty("commits_url")
-    private String commitsUrl;
-    @JsonProperty("git_commits_url")
-    private String gitCommitsUrl;
-    @JsonProperty("comments_url")
-    private String commentsUrl;
-    @JsonProperty("issue_comment_url")
-    private String issueCommenturl;
-    @JsonProperty("contents_url")
-    private String contentsUrl;
-    @JsonProperty("compare_url")
-    private String compareUrl;
-    @JsonProperty("merges_url")
-    private String mergesUrl;
-    @JsonProperty("archive_url")
-    private String archiveUrl;
-    @JsonProperty("downloads_url")
-    private String downloadsUrl;
-    @JsonProperty("issues_url")
-    private String issuesUrl;
-    @JsonProperty("pulls_url")
-    private String pullsUrl;
-    @JsonProperty("milestones_url")
-    private String milestonesUrl;
-    @JsonProperty("notifications_url")
-    private String notificationsUrl;
-    @JsonProperty("labels_url")
-    private String labelsUrl;
-    @JsonProperty("releases_url")
-    private String releasesUrl;
-    @JsonProperty("created_at")
-    private String createdAt;
-    @JsonProperty("updated_at")
-    private String updatedAt;
-    @JsonProperty("pushed_at")
-    private String pushedAt;
-    @JsonProperty("git_url")
-    private String gitUrl;
-    @JsonProperty("ssh_url")
-    private String sshUrl;
-    @JsonProperty("clone_url")
-    private String cloneUrl;
-    @JsonProperty("svn_url")
-    private String svnUrl;
-    private String homepage;
-    private int size;
-    @JsonProperty("stargazers_count")
-    private int stargazersCount;
-    @JsonProperty("watchers_count")
-    private int watchersCount;
-    private String language;
-    @JsonProperty("has_issues")
-    private boolean hasIssues;
-    @JsonProperty("has_downloads")
-    private boolean hasDownloads;
-    @JsonProperty("has_wiki")
-    private boolean hasWiki;
-    @JsonProperty("has_pages")
-    private boolean hasPages;
-    @JsonProperty("forks_count")
-    private int forksCount;
-    @JsonProperty("mirror_url")
-    private String mirrorUrl;
-    @JsonProperty("open_issues_count")
-    private int openIssuesCount;
-    private int forks;
-    @JsonProperty("open_ssues")
-    private int openIssues;
-    private int watchers;
-    private String default_branch;
+    private final int id;
+    private final String name;
+    private final String fullName;
+    private final GithubUser owner;
+    private final boolean privateRepo;
+    private final String htmlUrl;
+    private final String description;
+    private final boolean fork;
+    private final String url;
+    private final String forksUrl;
+    private final String keysUrl;
+    private final String collaboratorsUrl;
+    private final String teams_url;
+    private final String hooksUrl;
+    private final String issueEventsUrl;
+    private final String assigneesUrl;
+    private final String branchesUrl;
+    private final String gitTagsUrl;
+    private final String gitRefsUrl;
+    private final String treesUrl;
+    private final String statusesUrl;
+    private final String languagesUrl;
+    private final String stargazersUrl;
+    private final String contributorsUrl;
+    private final String subscribersUrl;
+    private final String subsciptionUrl;
+    private final String commitsUrl;
+    private final String gitCommitsUrl;
+    private final String commentsUrl;
+    private final String issueCommenturl;
+    private final String contentsUrl;
+    private final String compareUrl;
+    private final String mergesUrl;
+    private final String archiveUrl;
+    private final String downloadsUrl;
+    private final String issuesUrl;
+    private final String milestonesUrl;
+    private final String notificationsUrl;
+    private final String labelsUrl;
+    private final String releasesUrl;
+    private final String createdAt;
+    private final String updatedAt;
+    private final String pushedAt;
+    private final String gitUrl;
+    private final String sshUrl;
+    private final String cloneUrl;
+    private final String svnUrl;
+    private final String homepage;
+    private final int size;
+    private final int stargazersCount;
+    private final int watchersCount;
+    private final String language;
+    private final boolean hasIssues;
+    private final boolean hasDownloads;
+    private final boolean hasWiki;
+    private final boolean hasPages;
+    private final int forksCount;
+    private final String mirrorUrl;
+    private final int openIssuesCount;
+    private final int forks;
+    private final int openIssues;
+    private final int watchers;
+    private final String default_branch;
 
-    public GithubRepository() {
-        // Jackson
-    }
-
-    public GithubRepository(int id,
-                            String name,
-                            String fullName,
-                            GithubUser owner,
-                            boolean privateRepo,
-                            String htmlUrl,
-                            String description,
-                            boolean fork,
-                            String url,
-                            String forksUrl,
-                            String keysUrl,
-                            String collaboratorsUrl,
-                            String teams_url,
-                            String hooksUrl,
-                            String issueEventsUrl,
-                            String assigneesUrl,
-                            String branchesUrl,
-                            String gitTagsUrl,
-                            String gitRefsUrl,
-                            String treesUrl,
-                            String statusesUrl,
-                            String languagesUrl,
-                            String stargazersUrl,
-                            String contributorsUrl,
-                            String subscribersUrl,
-                            String subscriptionUrl,
-                            String commitsUrl,
-                            String gitCommitsUrl,
-                            String commentsUrl,
-                            String issueCommentUrl,
-                            String contentsUrl,
-                            String compareUrl,
-                            String mergesUrl,
-                            String archiveUrl,
-                            String downloadsUrl,
-                            String issuesUrl,
-                            String pullsUrl,
-                            String milestonesUrl,
-                            String notificationsUrl,
-                            String labelsUrl,
-                            String releasesUrl,
-                            String createdAt,
-                            String updatedAt,
-                            String pushedAt,
-                            String gitUrl,
-                            String sshUrl,
-                            String cloneUrl,
-                            String svnUrl,
-                            String homepage,
-                            int size,
-                            int stargazersCount,
-                            int watchersCount,
-                            String language,
-                            boolean hasIssues,
-                            boolean hasDownloads,
-                            boolean hasWiki,
-                            boolean hasPages,
-                            int forksCount,
-                            String mirrorUrl,
-                            int openIssuesCount,
-                            int forks,
-                            int openIssues,
-                            int watchers,
-                            String default_branch) {
-        this.id = id;
-        this.name = name;
-        this.fullName = fullName;
-        this.owner = owner;
-        this.privateRepo = privateRepo;
-        this.htmlUrl = htmlUrl;
-        this.description = description;
-        this.fork = fork;
-        this.url = url;
-        this.forksUrl = forksUrl;
-        this.keysUrl = keysUrl;
-        this.collaboratorsUrl = collaboratorsUrl;
-        this.teams_url = teams_url;
-        this.hooksUrl = hooksUrl;
-        this.issueEventsUrl = issueEventsUrl;
-        this.assigneesUrl = assigneesUrl;
-        this.branchesUrl = branchesUrl;
-        this.gitTagsUrl = gitTagsUrl;
-        this.gitRefsUrl = gitRefsUrl;
-        this.treesUrl = treesUrl;
-        this.statusesUrl = statusesUrl;
-        this.languagesUrl = languagesUrl;
-        this.stargazersUrl = stargazersUrl;
-        this.contributorsUrl = contributorsUrl;
-        this.subscribersUrl = subscribersUrl;
-        this.subsciptionUrl = subscriptionUrl;
-        this.commitsUrl = commitsUrl;
-        this.gitCommitsUrl = gitCommitsUrl;
-        this.commentsUrl = commentsUrl;
-        this.issueCommenturl = issueCommentUrl;
-        this.contentsUrl = contentsUrl;
-        this.compareUrl = compareUrl;
-        this.mergesUrl = mergesUrl;
-        this.archiveUrl = archiveUrl;
-        this.downloadsUrl = downloadsUrl;
-        this.issuesUrl = issuesUrl;
-        this.pullsUrl = pullsUrl;
-        this.milestonesUrl = milestonesUrl;
-        this.notificationsUrl = notificationsUrl;
-        this.labelsUrl = labelsUrl;
-        this.releasesUrl = releasesUrl;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.pushedAt = pushedAt;
-        this.gitUrl = gitUrl;
-        this.sshUrl = sshUrl;
-        this.cloneUrl = cloneUrl;
-        this.svnUrl = svnUrl;
-        this.homepage = homepage;
-        this.size = size;
-        this.stargazersCount = stargazersCount;
-        this.watchersCount = watchersCount;
-        this.language = language;
-        this.hasIssues = hasIssues;
-        this.hasDownloads = hasDownloads;
-        this.hasWiki = hasWiki;
-        this.hasPages = hasPages;
-        this.forksCount = forksCount;
-        this.mirrorUrl = mirrorUrl;
-        this.openIssuesCount = openIssuesCount;
-        this.forks = forks;
-        this.openIssues = openIssues;
-        this.watchers = watchers;
-        this.default_branch = default_branch;
+    public GithubRepository(Builder builder) {
+        this.id = builder.id;
+        this.name = builder.name;
+        this.fullName = builder.fullName;
+        this.owner = builder.owner;
+        this.privateRepo = builder.privateRepo;
+        this.htmlUrl = builder.htmlUrl;
+        this.description = builder.description;
+        this.fork = builder.fork;
+        this.url = builder.url;
+        this.forksUrl = builder.forksUrl;
+        this.keysUrl = builder.keysUrl;
+        this.collaboratorsUrl = builder.collaboratorsUrl;
+        this.teams_url = builder.teams_url;
+        this.hooksUrl = builder.hooksUrl;
+        this.issueEventsUrl = builder.issueEventsUrl;
+        this.assigneesUrl = builder.assigneesUrl;
+        this.branchesUrl = builder.branchesUrl;
+        this.gitTagsUrl = builder.gitTagsUrl;
+        this.gitRefsUrl = builder.gitRefsUrl;
+        this.treesUrl = builder.treesUrl;
+        this.statusesUrl = builder.statusesUrl;
+        this.languagesUrl = builder.languagesUrl;
+        this.stargazersUrl = builder.stargazersUrl;
+        this.contributorsUrl = builder.contributorsUrl;
+        this.subscribersUrl = builder.subscribersUrl;
+        this.subsciptionUrl = builder.subsciptionUrl;
+        this.commitsUrl = builder.commitsUrl;
+        this.gitCommitsUrl = builder.gitCommitsUrl;
+        this.commentsUrl = builder.commentsUrl;
+        this.issueCommenturl = builder.issueCommenturl;
+        this.contentsUrl = builder.contentsUrl;
+        this.compareUrl = builder.compareUrl;
+        this.mergesUrl = builder.mergesUrl;
+        this.archiveUrl = builder.archiveUrl;
+        this.downloadsUrl = builder.downloadsUrl;
+        this.issuesUrl = builder.issuesUrl;
+        this.milestonesUrl = builder.milestonesUrl;
+        this.notificationsUrl = builder.notificationsUrl;
+        this.labelsUrl = builder.labelsUrl;
+        this.releasesUrl = builder.releasesUrl;
+        this.createdAt = builder.createdAt;
+        this.updatedAt = builder.updatedAt;
+        this.pushedAt = builder.pushedAt;
+        this.gitUrl = builder.gitUrl;
+        this.sshUrl = builder.sshUrl;
+        this.cloneUrl = builder.cloneUrl;
+        this.svnUrl = builder.svnUrl;
+        this.homepage = builder.homepage;
+        this.size = builder.size;
+        this.stargazersCount = builder.stargazersCount;
+        this.watchersCount = builder.watchersCount;
+        this.language = builder.language;
+        this.hasIssues = builder.hasIssues;
+        this.hasDownloads = builder.hasDownloads;
+        this.hasWiki = builder.hasWiki;
+        this.hasPages = builder.hasPages;
+        this.forksCount = builder.forksCount;
+        this.mirrorUrl = builder.mirrorUrl;
+        this.openIssuesCount = builder.openIssuesCount;
+        this.forks = builder.forks;
+        this.openIssues = builder.openIssues;
+        this.watchers = builder.watchers;
+        this.default_branch = builder.default_branch;
     }
 
     public int getId() {
@@ -398,10 +282,6 @@ public class GithubRepository {
         return issuesUrl;
     }
 
-    public String getPullsUrl() {
-        return pullsUrl;
-    }
-
     public String getMilestonesUrl() {
         return milestonesUrl;
     }
@@ -508,5 +388,397 @@ public class GithubRepository {
 
     public String getDefault_branch() {
         return default_branch;
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
+    @JsonPOJOBuilder(withPrefix = "set")
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Builder {
+
+        private int id;
+        private String name;
+        private String fullName;
+        private GithubUser owner;
+        private boolean privateRepo;
+        private String htmlUrl;
+        private String description;
+        private boolean fork;
+        private String url;
+        private String forksUrl;
+        private String keysUrl;
+        private String collaboratorsUrl;
+        private String teams_url;
+        private String hooksUrl;
+        private String issueEventsUrl;
+        private String assigneesUrl;
+        private String branchesUrl;
+        private String gitTagsUrl;
+        private String gitRefsUrl;
+        private String treesUrl;
+        private String statusesUrl;
+        private String languagesUrl;
+        private String stargazersUrl;
+        private String contributorsUrl;
+        private String subscribersUrl;
+        private String subsciptionUrl;
+        private String commitsUrl;
+        private String gitCommitsUrl;
+        private String commentsUrl;
+        private String issueCommenturl;
+        private String contentsUrl;
+        private String compareUrl;
+        private String mergesUrl;
+        private String archiveUrl;
+        private String downloadsUrl;
+        private String issuesUrl;
+        private String milestonesUrl;
+        private String notificationsUrl;
+        private String labelsUrl;
+        private String releasesUrl;
+        private String createdAt;
+        private String updatedAt;
+        private String pushedAt;
+        private String gitUrl;
+        private String sshUrl;
+        private String cloneUrl;
+        private String svnUrl;
+        private String homepage;
+        private int size;
+        private int stargazersCount;
+        private int watchersCount;
+        private String language;
+        private boolean hasIssues;
+        private boolean hasDownloads;
+        private boolean hasWiki;
+        private boolean hasPages;
+        private int forksCount;
+        private String mirrorUrl;
+        private int openIssuesCount;
+        private int forks;
+        private int openIssues;
+        private int watchers;
+        private String default_branch;
+
+        public Builder setId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder setFullName(String fullName) {
+            this.fullName = fullName;
+            return this;
+        }
+
+        public Builder setOwner(GithubUser owner) {
+            this.owner = owner;
+            return this;
+        }
+
+        public Builder setPrivateRepo(boolean privateRepo) {
+            this.privateRepo = privateRepo;
+            return this;
+        }
+
+        public Builder setHtmlUrl(String htmlUrl) {
+            this.htmlUrl = htmlUrl;
+            return this;
+        }
+
+        public Builder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder setFork(boolean fork) {
+            this.fork = fork;
+            return this;
+        }
+
+        public Builder setUrl(String url) {
+            this.url = url;
+            return this;
+        }
+
+        public Builder setForksUrl(String forksUrl) {
+            this.forksUrl = forksUrl;
+            return this;
+        }
+
+        public Builder setKeysUrl(String keysUrl) {
+            this.keysUrl = keysUrl;
+            return this;
+        }
+
+        public Builder setCollaboratorsUrl(String collaboratorsUrl) {
+            this.collaboratorsUrl = collaboratorsUrl;
+            return this;
+        }
+
+        public Builder setTeams_url(String teams_url) {
+            this.teams_url = teams_url;
+            return this;
+        }
+
+        public Builder setHooksUrl(String hooksUrl) {
+            this.hooksUrl = hooksUrl;
+            return this;
+        }
+
+        public Builder setIssueEventsUrl(String issueEventsUrl) {
+            this.issueEventsUrl = issueEventsUrl;
+            return this;
+        }
+
+        public Builder setAssigneesUrl(String assigneesUrl) {
+            this.assigneesUrl = assigneesUrl;
+            return this;
+        }
+
+        public Builder setBranchesUrl(String branchesUrl) {
+            this.branchesUrl = branchesUrl;
+            return this;
+        }
+
+        public Builder setGitTagsUrl(String gitTagsUrl) {
+            this.gitTagsUrl = gitTagsUrl;
+            return this;
+        }
+
+        public Builder setGitRefsUrl(String gitRefsUrl) {
+            this.gitRefsUrl = gitRefsUrl;
+            return this;
+        }
+
+        public Builder setTreesUrl(String treesUrl) {
+            this.treesUrl = treesUrl;
+            return this;
+        }
+
+        public Builder setStatusesUrl(String statusesUrl) {
+            this.statusesUrl = statusesUrl;
+            return this;
+        }
+
+        public Builder setLanguagesUrl(String languagesUrl) {
+            this.languagesUrl = languagesUrl;
+            return this;
+        }
+
+        public Builder setStargazersUrl(String stargazersUrl) {
+            this.stargazersUrl = stargazersUrl;
+            return this;
+        }
+
+        public Builder setContributorsUrl(String contributorsUrl) {
+            this.contributorsUrl = contributorsUrl;
+            return this;
+        }
+
+        public Builder setSubscribersUrl(String subscribersUrl) {
+            this.subscribersUrl = subscribersUrl;
+            return this;
+        }
+
+        public Builder setSubsciptionUrl(String subsciptionUrl) {
+            this.subsciptionUrl = subsciptionUrl;
+            return this;
+        }
+
+        public Builder setCommitsUrl(String commitsUrl) {
+            this.commitsUrl = commitsUrl;
+            return this;
+        }
+
+        public Builder setGitCommitsUrl(String gitCommitsUrl) {
+            this.gitCommitsUrl = gitCommitsUrl;
+            return this;
+        }
+
+        public Builder setCommentsUrl(String commentsUrl) {
+            this.commentsUrl = commentsUrl;
+            return this;
+        }
+
+        public Builder setIssueCommenturl(String issueCommenturl) {
+            this.issueCommenturl = issueCommenturl;
+            return this;
+        }
+
+        public Builder setContentsUrl(String contentsUrl) {
+            this.contentsUrl = contentsUrl;
+            return this;
+        }
+
+        public Builder setCompareUrl(String compareUrl) {
+            this.compareUrl = compareUrl;
+            return this;
+        }
+
+        public Builder setMergesUrl(String mergesUrl) {
+            this.mergesUrl = mergesUrl;
+            return this;
+        }
+
+        public Builder setArchiveUrl(String archiveUrl) {
+            this.archiveUrl = archiveUrl;
+            return this;
+        }
+
+        public Builder setDownloadsUrl(String downloadsUrl) {
+            this.downloadsUrl = downloadsUrl;
+            return this;
+        }
+
+        public Builder setIssuesUrl(String issuesUrl) {
+            this.issuesUrl = issuesUrl;
+            return this;
+        }
+
+        public Builder setMilestonesUrl(String milestonesUrl) {
+            this.milestonesUrl = milestonesUrl;
+            return this;
+        }
+
+        public Builder setNotificationsUrl(String notificationsUrl) {
+            this.notificationsUrl = notificationsUrl;
+            return this;
+        }
+
+        public Builder setLabelsUrl(String labelsUrl) {
+            this.labelsUrl = labelsUrl;
+            return this;
+        }
+
+        public Builder setReleasesUrl(String releasesUrl) {
+            this.releasesUrl = releasesUrl;
+            return this;
+        }
+
+        public Builder setCreatedAt(String createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Builder setUpdatedAt(String updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        public Builder setPushedAt(String pushedAt) {
+            this.pushedAt = pushedAt;
+            return this;
+        }
+
+        public Builder setGitUrl(String gitUrl) {
+            this.gitUrl = gitUrl;
+            return this;
+        }
+
+        public Builder setSshUrl(String sshUrl) {
+            this.sshUrl = sshUrl;
+            return this;
+        }
+
+        public Builder setCloneUrl(String cloneUrl) {
+            this.cloneUrl = cloneUrl;
+            return this;
+        }
+
+        public Builder setSvnUrl(String svnUrl) {
+            this.svnUrl = svnUrl;
+            return this;
+        }
+
+        public Builder setHomepage(String homepage) {
+            this.homepage = homepage;
+            return this;
+        }
+
+        public Builder setSize(int size) {
+            this.size = size;
+            return this;
+        }
+
+        public Builder setStargazersCount(int stargazersCount) {
+            this.stargazersCount = stargazersCount;
+            return this;
+        }
+
+        public Builder setWatchersCount(int watchersCount) {
+            this.watchersCount = watchersCount;
+            return this;
+        }
+
+        public Builder setLanguage(String language) {
+            this.language = language;
+            return this;
+        }
+
+        public Builder setHasIssues(boolean hasIssues) {
+            this.hasIssues = hasIssues;
+            return this;
+        }
+
+        public Builder setHasDownloads(boolean hasDownloads) {
+            this.hasDownloads = hasDownloads;
+            return this;
+        }
+
+        public Builder setHasWiki(boolean hasWiki) {
+            this.hasWiki = hasWiki;
+            return this;
+        }
+
+        public Builder setHasPages(boolean hasPages) {
+            this.hasPages = hasPages;
+            return this;
+        }
+
+        public Builder setForksCount(int forksCount) {
+            this.forksCount = forksCount;
+            return this;
+        }
+
+        public Builder setMirrorUrl(String mirrorUrl) {
+            this.mirrorUrl = mirrorUrl;
+            return this;
+        }
+
+        public Builder setOpenIssuesCount(int openIssuesCount) {
+            this.openIssuesCount = openIssuesCount;
+            return this;
+        }
+
+        public Builder setForks(int forks) {
+            this.forks = forks;
+            return this;
+        }
+
+        public Builder setOpenIssues(int openIssues) {
+            this.openIssues = openIssues;
+            return this;
+        }
+
+        public Builder setWatchers(int watchers) {
+            this.watchers = watchers;
+            return this;
+        }
+
+        public Builder setDefault_branch(String default_branch) {
+            this.default_branch = default_branch;
+            return this;
+        }
+
+        public GithubRepository build() {
+            return new GithubRepository(this);
+        }
     }
 }

@@ -1,84 +1,59 @@
 package io.pranav.gitrello.github;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import io.pranav.gitrello.github.GithubIssue.Builder;
 
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonDeserialize(builder = Builder.class)
 public class GithubIssue {
-    private String url;
-    @JsonProperty("labels_url")
-    private String labelsUrl;
-    @JsonProperty("comments_url")
-    private String commentsUrl;
-    @JsonProperty("events_url")
-    private String eventsUrl;
-    private int id;
-    private int number;
-    private String title;
-    private GithubUser user;
-    private List<GithubLabel> labels;
-    private String state;
-    private boolean locked;
-    private  GithubUser assignee;
-    private GithubMilestone milestone;
-    private int comments;
-    @JsonProperty("created_at")
-    private String createdAt;
-    @JsonProperty("updated_at")
-    private String updatedAt;
-    @JsonProperty("closed_at")
-    private String closedAt;
-    private String body;
-    private GithubLabel label;
-    private GithubRepository repository;
-    private GithubUser sender;
+    private final String url;
+    private final String labelsUrl;
+    private final String commentsUrl;
+    private final String eventsUrl;
+    private final int id;
+    private final int number;
+    private final String title;
+    private final GithubUser user;
+    private final List<GithubLabel> labels;
+    private final String state;
+    private final boolean locked;
+    private final GithubUser assignee;
+    private final GithubMilestone milestone;
+    private final int comments;
+    private final String createdAt;
+    private final String updatedAt;
+    private final String closedAt;
+    private final String body;
+    private final GithubLabel label;
+    private final GithubRepository repository;
+    private final GithubUser sender;
 
-    public GithubIssue() {
-        // Jackson
-    }
-
-    public GithubIssue(String url,
-                       String labelsUrl,
-                       String commentsUrl,
-                       String eventsUrl,
-                       int id,
-                       int number,
-                       String title,
-                       GithubUser user,
-                       List<GithubLabel> labels,
-                       String state,
-                       boolean locked,
-                       GithubUser assignee,
-                       GithubMilestone milestone,
-                       int comments,
-                       String createdAt,
-                       String updatedAt,
-                       String closedAt,
-                       String body,
-                       GithubLabel label,
-                       GithubRepository repository,
-                       GithubUser sender) {
-        this.url = url;
-        this.labelsUrl = labelsUrl;
-        this.commentsUrl = commentsUrl;
-        this.eventsUrl = eventsUrl;
-        this.id = id;
-        this.number = number;
-        this.title = title;
-        this.user = user;
-        this.labels = labels;
-        this.state = state;
-        this.locked = locked;
-        this.assignee = assignee;
-        this.milestone = milestone;
-        this.comments = comments;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.closedAt = closedAt;
-        this.body = body;
-        this.label = label;
-        this.repository = repository;
-        this.sender = sender;
+    public GithubIssue(Builder builder) {
+        this.url = builder.url;
+        this.labelsUrl = builder.labelsUrl;
+        this.commentsUrl = builder.commentsUrl;
+        this.eventsUrl = builder.eventsUrl;
+        this.id = builder.id;
+        this.number = builder.number;
+        this.title = builder.title;
+        this.user = builder.user;
+        this.labels = builder.labels;
+        this.state = builder.state;
+        this.locked = builder.locked;
+        this.assignee = builder.assignee;
+        this.milestone = builder.milestone;
+        this.comments = builder.comments;
+        this.createdAt = builder.createdAt;
+        this.updatedAt = builder.updatedAt;
+        this.closedAt = builder.closedAt;
+        this.body = builder.body;
+        this.label = builder.label;
+        this.repository = builder.repository;
+        this.sender = builder.sender;
     }
 
     public String getUrl() {
@@ -163,5 +138,145 @@ public class GithubIssue {
 
     public GithubUser getSender() {
         return sender;
+    }
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
+    @JsonPOJOBuilder(withPrefix = "set")
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Builder {
+
+        private String url;
+        private String labelsUrl;
+        private String commentsUrl;
+        private String eventsUrl;
+        private int id;
+        private int number;
+        private String title;
+        private GithubUser user;
+        private List<GithubLabel> labels;
+        private String state;
+        private boolean locked;
+        private GithubUser assignee;
+        private GithubMilestone milestone;
+        private int comments;
+        private String createdAt;
+        private String updatedAt;
+        private String closedAt;
+        private String body;
+        private GithubLabel label;
+        private GithubRepository repository;
+        private GithubUser sender;
+
+        public Builder setUrl(String url) {
+            this.url = url;
+            return this;
+        }
+
+        public Builder setLabelsUrl(String labelsUrl) {
+            this.labelsUrl = labelsUrl;
+            return this;
+        }
+
+        public Builder setCommentsUrl(String commentsUrl) {
+            this.commentsUrl = commentsUrl;
+            return this;
+        }
+
+        public Builder setEventsUrl(String eventsUrl) {
+            this.eventsUrl = eventsUrl;
+            return this;
+        }
+
+        public Builder setId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setNumber(int number) {
+            this.number = number;
+            return this;
+        }
+
+        public Builder setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Builder setUser(GithubUser user) {
+            this.user = user;
+            return this;
+        }
+
+        public Builder setLabels(List<GithubLabel> labels) {
+            this.labels = labels;
+            return this;
+        }
+
+        public Builder setState(String state) {
+            this.state = state;
+            return this;
+        }
+
+        public Builder setLocked(boolean locked) {
+            this.locked = locked;
+            return this;
+        }
+
+        public Builder setAssignee(GithubUser assignee) {
+            this.assignee = assignee;
+            return this;
+        }
+
+        public Builder setMilestone(GithubMilestone milestone) {
+            this.milestone = milestone;
+            return this;
+        }
+
+        public Builder setComments(int comments) {
+            this.comments = comments;
+            return this;
+        }
+
+        public Builder setCreatedAt(String createdAt) {
+            this.createdAt = createdAt;
+            return this;
+        }
+
+        public Builder setUpdatedAt(String updatedAt) {
+            this.updatedAt = updatedAt;
+            return this;
+        }
+
+        public Builder setClosedAt(String closedAt) {
+            this.closedAt = closedAt;
+            return this;
+        }
+
+        public Builder setBody(String body) {
+            this.body = body;
+            return this;
+        }
+
+        public Builder setLabel(GithubLabel label) {
+            this.label = label;
+            return this;
+        }
+
+        public Builder setRepository(GithubRepository repository) {
+            this.repository = repository;
+            return this;
+        }
+
+        public Builder setSender(GithubUser sender) {
+            this.sender = sender;
+            return this;
+        }
+
+        public GithubIssue build() {
+            return new GithubIssue(this);
+        }
     }
 }
