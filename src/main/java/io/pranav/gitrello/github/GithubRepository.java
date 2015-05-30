@@ -20,7 +20,7 @@ public class GithubRepository {
   private final String forksUrl;
   private final String keysUrl;
   private final String collaboratorsUrl;
-  private final String teams_url;
+  private final String teamsUrl;
   private final String hooksUrl;
   private final String issueEventsUrl;
   private final String assigneesUrl;
@@ -85,7 +85,7 @@ public class GithubRepository {
     this.forksUrl = builder.forksUrl;
     this.keysUrl = builder.keysUrl;
     this.collaboratorsUrl = builder.collaboratorsUrl;
-    this.teams_url = builder.teams_url;
+    this.teamsUrl = builder.teamsUrl;
     this.hooksUrl = builder.hooksUrl;
     this.issueEventsUrl = builder.issueEventsUrl;
     this.assigneesUrl = builder.assigneesUrl;
@@ -186,8 +186,8 @@ public class GithubRepository {
     return collaboratorsUrl;
   }
 
-  public String getTeams_url() {
-    return teams_url;
+  public String getTeamsUrl() {
+    return teamsUrl;
   }
 
   public String getHooksUrl() {
@@ -410,7 +410,7 @@ public class GithubRepository {
     private String forksUrl;
     private String keysUrl;
     private String collaboratorsUrl;
-    private String teams_url;
+    private String teamsUrl;
     private String hooksUrl;
     private String issueEventsUrl;
     private String assigneesUrl;
@@ -522,8 +522,8 @@ public class GithubRepository {
       return this;
     }
 
-    public Builder setTeams_url(String teams_url) {
-      this.teams_url = teams_url;
+    public Builder setTeamsUrl(String teamsUrl) {
+      this.teamsUrl = teamsUrl;
       return this;
     }
 

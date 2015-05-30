@@ -7,7 +7,7 @@ public class GitrelloModule extends AbstractModule {
 
   @Override
   protected void configure() {
-    // I would put configuration here, IF I HAD ONE.
+    // I would put configuration in here, IF I HAD ONE.
   }
 
 }
