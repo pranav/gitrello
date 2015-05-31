@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TrelloClient {
   private static final String TRELLO_API = "https://api.trello.com/1/";
-  private static final String MY_BOARDS = "me/boards/";
+  private static final String MY_BOARDS = "members/me/boards/";
   private static final String BOARD = "boards/";
 
   private final String key;
@@ -27,9 +27,9 @@ public class TrelloClient {
     this.client = client;
   }
 
-  public Board[] getBoards() throws IOException {
+  public List<Board> getBoards() throws IOException {
     ObjectMapper mapper = new ObjectMapper();
-    return mapper.readValue(get(MY_BOARDS), Board[].class);
+    return mapper.readValue(get(MY_BOARDS), new TypeReference<List<Board>>(){});
   }
 
   public Board getBoard(String id) throws IOException {

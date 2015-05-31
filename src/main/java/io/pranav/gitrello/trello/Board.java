@@ -3,7 +3,6 @@ package io.pranav.gitrello.trello;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import io.pranav.gitrello.github.GithubLabel;
 import io.pranav.gitrello.trello.Board.Builder;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -15,10 +14,10 @@ public class Board {
   private final String idOrganization;
 
   public Board(Builder builder) {
-    this.id = builder.id;
-    this.name = builder.name;
-    this.closed = builder.closed;
-    this.idOrganization = builder.idOrganization;
+    id = builder.id;
+    name = builder.name;
+    closed = builder.closed;
+    idOrganization = builder.idOrganization;
   }
 
   public String getId() {
