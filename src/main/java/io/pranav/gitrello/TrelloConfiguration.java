@@ -7,7 +7,7 @@ public class TrelloConfiguration {
 
   @NotEmpty @JsonProperty private String key;
   @NotEmpty @JsonProperty private String token;
-  @NotEmpty @JsonProperty private String email;
+  @NotEmpty @JsonProperty private String newCardListName;
 
   public String getKey() {
     return key;
@@ -25,12 +25,11 @@ public class TrelloConfiguration {
     this.token = token;
   }
 
-  public String getEmail() {
-    return email;
+  public String getNewCardListName() {
+    return newCardListName;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
+  public void setNewCardListName(String newCardListName) {
+    this.newCardListName = newCardListName;
   }
-
 }
