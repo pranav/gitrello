@@ -1,7 +1,9 @@
 package io.pranav.gitrello;
 
 
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.google.inject.AbstractModule;
+import com.google.inject.Inject;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import org.glassfish.jersey.client.JerseyClientBuilder;
@@ -23,7 +25,15 @@ public class GitrelloModule extends AbstractModule {
   @Provides
   @Named("client")
   public Client provideJerseyClient() {
-    return new JerseyClientBuilder().build();
+    return new JerseyClientBuilder()
+        .register(JacksonJsonProvider.class)
+        .build();
   }
 
+  @Provides
+  @Named("TrelloClient")
+  public TrelloClient provideTrelloClient(@Named("configuration") GitrelloConfiguration configuration,
+                                          @Named("client") Client client) {
+    return new TrelloClient(configuration, client);
+  }
 }

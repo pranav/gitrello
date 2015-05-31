@@ -5,22 +5,32 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class TrelloConfiguration {
 
-  @NotEmpty @JsonProperty public String trelloApiKey;
-  @NotEmpty @JsonProperty public String trelloApiSecret;
+  @NotEmpty @JsonProperty private String key;
+  @NotEmpty @JsonProperty private String token;
+  @NotEmpty @JsonProperty private String email;
 
-  public String getTrelloApiKey() {
-    return trelloApiKey;
+  public String getKey() {
+    return key;
   }
 
-  public void setTrelloApiKey(String trelloApiKey) {
-    this.trelloApiKey = trelloApiKey;
+  public void setKey(String key) {
+    this.key = key;
   }
 
-  public String getTrelloApiSecret() {
-    return trelloApiSecret;
+  public String getToken() {
+    return token;
   }
 
-  public void setTrelloApiSecret(String trelloApiSecret) {
-    this.trelloApiSecret = trelloApiSecret;
+  public void setToken(String token) {
+    this.token = token;
   }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
 }
