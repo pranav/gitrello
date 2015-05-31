@@ -6,7 +6,6 @@ import com.hubspot.dropwizard.guice.GuiceBundle;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import io.pranav.gitrello.resources.GithubIssueResource;
 
 
 public class GitrelloApplication extends Application<GitrelloConfiguration>{
@@ -34,8 +33,9 @@ public class GitrelloApplication extends Application<GitrelloConfiguration>{
   }
 
   @Override
-  public void run(GitrelloConfiguration configuration, Environment environment) {
+  public void run(GitrelloConfiguration configuration, Environment environment) throws Exception {
     environment.getObjectMapper().setPropertyNamingStrategy(
       PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
   }
+
 }

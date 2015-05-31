@@ -1,31 +1,37 @@
 package io.pranav.gitrello;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.inject.Singleton;
 import io.dropwizard.Configuration;
-import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+@Singleton
 public class GitrelloConfiguration extends Configuration {
 
-  @NotEmpty public String trelloApiKey;
-  @NotEmpty public String trelloApiSecret;
+  @Valid
+  @NotNull
+  private TrelloConfiguration trelloConfiguration = new TrelloConfiguration();
 
-  @JsonProperty
-  public String getTrelloApiKey() {
-    return trelloApiKey;
+  @Valid
+  @NotNull
+  private JerseyClientConfiguration httpClient = new JerseyClientConfiguration();
+
+  public TrelloConfiguration getTrelloConfiguration() {
+    return trelloConfiguration;
   }
 
-  @JsonProperty
-  public void setTrelloApiKey(String trelloApiKey) {
-    this.trelloApiKey = trelloApiKey;
+  public void setTrelloConfiguration(TrelloConfiguration trelloConfiguration) {
+    this.trelloConfiguration = trelloConfiguration;
   }
 
-  @JsonProperty
-  public String getTrelloApiSecret() {
-    return trelloApiSecret;
+  @JsonProperty("httpClient")
+  public JerseyClientConfiguration getJerseyClientConfiguration() {
+    return httpClient;
   }
 
-  @JsonProperty
-  public void setTrelloApiSecret(String trelloApiSecret) {
-    this.trelloApiSecret = trelloApiSecret;
+  public void setJerseyClientConfiguration(JerseyClientConfiguration httpClient) {
+    this.httpClient = httpClient;
   }
 }
