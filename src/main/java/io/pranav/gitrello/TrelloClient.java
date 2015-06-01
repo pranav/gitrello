@@ -48,21 +48,20 @@ public class TrelloClient {
         .toString();
   }
 
-  public String createNewCard(Card card, String githubIssueIdentifier) {
+  public Card createNewCard(Card card, String githubIssueIdentifier) throws IOException {
     String description = new StringBuilder(githubIssueIdentifier)
         .append("\n\n")
         .append(card.getDesc())
         .toString();
 
     Form form = new Form()
-        .param("key", key)
-        .param("token", token)
         .param("name", card.getName())
         .param("desc", description)
         .param("due", card.getDue())
         .param("idList", card.getIdList())
         .param("urlSource", "null");
-    return post(CARDS, form);
+    String rawJson = post(CARDS, form);
+    return mapper.readValue(rawJson, Card.class);
   }
 
   public Search search(String searchString) throws IOException {
@@ -87,9 +86,9 @@ public class TrelloClient {
     return mapper.readValue(get(BOARD + boardId + "/lists"), new TypeReference<List<BoardList>>(){});
   }
 
-  public String postComment(String cardId, String comment) {
+  public CommentCard postComment(String cardId, String comment) throws IOException {
     Form form = new Form().param("text", comment);
-    return post(CARDS + cardId + "/actions/comments", form);
+    return mapper.readValue(post(CARDS + cardId + "/actions/comments", form), CommentCard.class);
   }
 
   public List<CommentCard> getCommentCardsForCard(String cardId) throws IOException {

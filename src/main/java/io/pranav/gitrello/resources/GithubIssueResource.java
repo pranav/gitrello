@@ -39,24 +39,24 @@ public class GithubIssueResource {
 
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
-  public void receiveGithubIssueWebHook(GithubWebHook githubWebHook) throws IOException {
+  public void receiveGithubIssueWebHook(GithubWebHook githubWebHook) throws IOException, InterruptedException {
     String searchString = TrelloClient.getGithubIssueIdentifier(githubWebHook);
     List<Card> cards = searchForCard(searchString);
+    Card card;
 
     if(cards.size() == 0) {
-      createNewCard(githubWebHook);
-      cards = searchForCard(searchString);
+      card = createNewCard(githubWebHook);
+    } else {
+      card = cards.get(0);
     }
-    Card card = cards.get(0);
     // Make sure comments are in sync
-    System.out.println(card.getName());
     List<GithubComment> githubComments = github.getGithubComments(githubWebHook.getIssue().getCommentsUrl());
     List<CommentCard> trelloComments = trello.getCommentCardsForCard(card.getId());
     for(GithubComment githubComment : githubComments) {
       String githubCommentTrelloString = githubComment.toTrelloCommentString();
-      if(!(trelloComments.stream().anyMatch(t -> t.getData().getText().equals(githubCommentTrelloString)))) {
+      if(!trelloComments.stream().anyMatch(t -> t.getData().getText().equals(githubCommentTrelloString))) {
         System.out.println("Adding comment: "+githubComment.toTrelloCommentString());
-        System.out.println(trello.postComment(card.getId(), githubComment.toTrelloCommentString()));
+        trelloComments.add(trello.postComment(card.getId(), githubComment.toTrelloCommentString()));
       }
     }
   }
@@ -81,8 +81,9 @@ public class GithubIssueResource {
         .setIdList(boardList.getId())
         .setUrlSource("null")
         .build();
-    trello.createNewCard(card, TrelloClient.getGithubIssueIdentifier(githubWebHook));
-    return card;
+    System.out.println("Creating new card: "+card.getName());
+    Card trelloCard = trello.createNewCard(card, TrelloClient.getGithubIssueIdentifier(githubWebHook));
+    return trelloCard;
   }
 
 }
