@@ -3,9 +3,11 @@ package io.pranav.gitrello;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
+import io.pranav.gitrello.github.GithubWebHook;
 import io.pranav.gitrello.trello.Board;
 import io.pranav.gitrello.trello.BoardList;
 import io.pranav.gitrello.trello.Card;
+import io.pranav.gitrello.trello.CommentCard;
 import io.pranav.gitrello.trello.Search;
 
 import javax.ws.rs.client.Client;
@@ -35,8 +37,19 @@ public class TrelloClient {
     this.client = client;
   }
 
-  public String createNewCard(Card card, String githubIssue) {
-    String description = new StringBuilder(githubIssue)
+  public static String getGithubIssueIdentifier(GithubWebHook githubWebHook) {
+    return new StringBuilder()
+        .append(githubWebHook.getRepository().getOwner().getLogin())
+        .append("/")
+        .append(githubWebHook.getRepository().getName())
+        .append("/")
+        .append(githubWebHook.getIssue().getNumber())
+        .append("/")
+        .toString();
+  }
+
+  public String createNewCard(Card card, String githubIssueIdentifier) {
+    String description = new StringBuilder(githubIssueIdentifier)
         .append("\n\n")
         .append(card.getDesc())
         .toString();
@@ -74,6 +87,22 @@ public class TrelloClient {
     return mapper.readValue(get(BOARD + boardId + "/lists"), new TypeReference<List<BoardList>>(){});
   }
 
+  public String postComment(String cardId, String comment) {
+    Form form = new Form().param("text", comment);
+    return post(CARDS + cardId + "/actions/comments", form);
+  }
+
+  public List<CommentCard> getCommentCardsForCard(String cardId) throws IOException {
+    Response res = client.target(CARDS + cardId)
+        .queryParam("key", key)
+        .queryParam("token", token)
+        .queryParam("actions", "commentCard")
+        .request(MediaType.APPLICATION_JSON)
+        .get();
+    Card card = mapper.readValue(res.readEntity(String.class), Card.class);
+    return card.getCommentCards();
+  }
+
   private String get(String endpoint) {
     Response res = client.target(endpoint)
         .queryParam("key", key)
@@ -84,6 +113,8 @@ public class TrelloClient {
   }
 
   private String post(String endpoint, Form form) {
+    form.param("key", key)
+        .param("token", token);
     Response res = client.target(endpoint)
         .request(MediaType.APPLICATION_JSON)
         .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
