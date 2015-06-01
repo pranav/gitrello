@@ -102,6 +102,11 @@ public class TrelloClient {
     return card.getCommentCards();
   }
 
+  public List<Card> getBoardCards(String boardId) throws IOException {
+    return getMapper().readValue(get(BOARD + boardId + "/cards"), new TypeReference<List<Card>>() {
+    });
+  }
+
   private String get(String endpoint) {
     Response res = client.target(endpoint)
         .queryParam("key", key)

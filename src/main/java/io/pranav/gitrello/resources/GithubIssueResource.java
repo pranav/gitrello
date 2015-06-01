@@ -40,15 +40,13 @@ public class GithubIssueResource {
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   public void receiveGithubIssueWebHook(GithubWebHook githubWebHook) throws IOException, InterruptedException {
-    String searchString = TrelloClient.getGithubIssueIdentifier(githubWebHook);
-    List<Card> cards = searchForCard(searchString);
     Card card;
-
-    if(cards.size() == 0) {
+    try {
+      card = searchForCard(githubWebHook);
+    } catch (IndexOutOfBoundsException e) {
       card = createNewCard(githubWebHook);
-    } else {
-      card = cards.get(0);
     }
+
     // Make sure comments are in sync
     List<GithubComment> githubComments = github.getGithubComments(githubWebHook.getIssue().getCommentsUrl());
     List<CommentCard> trelloComments = trello.getCommentCardsForCard(card.getId());
@@ -61,10 +59,12 @@ public class GithubIssueResource {
     }
   }
 
-  private List<Card> searchForCard(String searchString) throws IOException {
-    return trello.search(searchString).getCards().stream()
-        .filter(c -> c.getDesc().startsWith(searchString))
-        .collect(Collectors.toList());
+  private Card searchForCard(GithubWebHook githubWebHook) throws IOException {
+    Board board = trello.search(githubWebHook.getRepository().getName()).getBoards().get(0);
+    List<Card> cards = trello.getBoardCards(board.getId());
+    return cards.stream()
+        .filter(c -> c.getDesc().startsWith(TrelloClient.getGithubIssueIdentifier(githubWebHook)))
+        .collect(Collectors.toList()).get(0);
   }
 
   private Card createNewCard(GithubWebHook githubWebHook) throws IOException {
