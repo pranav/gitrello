@@ -28,7 +28,6 @@ public class TrelloClient {
   private final String key;
   private final String token;
   private final Client client;
-  private final ObjectMapper mapper = new ObjectMapper();
 
   @Inject
   public TrelloClient(GitrelloConfiguration configuration, Client client) {
@@ -61,7 +60,7 @@ public class TrelloClient {
         .param("idList", card.getIdList())
         .param("urlSource", "null");
     String rawJson = post(CARDS, form);
-    return mapper.readValue(rawJson, Card.class);
+    return getMapper().readValue(rawJson, Card.class);
   }
 
   public Search search(String searchString) throws IOException {
@@ -69,26 +68,27 @@ public class TrelloClient {
         .queryParam("key", key)
         .queryParam("token", token)
         .queryParam("query", searchString)
+        .queryParam("modelTypes", "cards,boards")
         .request(MediaType.APPLICATION_JSON)
         .get();
-    return mapper.readValue(res.readEntity(String.class), Search.class);
+    return getMapper().readValue(res.readEntity(String.class), Search.class);
   }
 
   public List<Board> getBoards() throws IOException {
-    return mapper.readValue(get(MY_BOARDS), new TypeReference<List<Board>>(){});
+    return getMapper().readValue(get(MY_BOARDS), new TypeReference<List<Board>>(){});
   }
 
   public Board getBoard(String id) throws IOException {
-    return mapper.readValue(get(BOARD + id), Board.class);
+    return getMapper().readValue(get(BOARD + id), Board.class);
   }
 
   public List<BoardList> getBoardLists(String boardId) throws IOException {
-    return mapper.readValue(get(BOARD + boardId + "/lists"), new TypeReference<List<BoardList>>(){});
+    return getMapper().readValue(get(BOARD + boardId + "/lists"), new TypeReference<List<BoardList>>(){});
   }
 
   public CommentCard postComment(String cardId, String comment) throws IOException {
     Form form = new Form().param("text", comment);
-    return mapper.readValue(post(CARDS + cardId + "/actions/comments", form), CommentCard.class);
+    return getMapper().readValue(post(CARDS + cardId + "/actions/comments", form), CommentCard.class);
   }
 
   public List<CommentCard> getCommentCardsForCard(String cardId) throws IOException {
@@ -98,7 +98,7 @@ public class TrelloClient {
         .queryParam("actions", "commentCard")
         .request(MediaType.APPLICATION_JSON)
         .get();
-    Card card = mapper.readValue(res.readEntity(String.class), Card.class);
+    Card card = getMapper().readValue(res.readEntity(String.class), Card.class);
     return card.getCommentCards();
   }
 
@@ -118,6 +118,10 @@ public class TrelloClient {
         .request(MediaType.APPLICATION_JSON)
         .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE));
     return res.readEntity(String.class);
+  }
+
+  public ObjectMapper getMapper() {
+    return new ObjectMapper();
   }
 
 }
